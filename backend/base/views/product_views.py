@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.contrib.auth.hashers import make_password
 from rest_framework.views import APIView
 from rest_framework.response import Response 
-from .serializers import ProductSerializer
-from .models import Product
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from base.serializers import ProductSerializer
+from base.models import Product
+
 
 class ProductsView(APIView):
     def get(self, request):
