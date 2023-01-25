@@ -19,13 +19,25 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-
 class UserProfileView(APIView):
     def get(self, request):
         permission_classes = [IsAuthenticated]
         queryset = request.user
         serializer = UserSerializer(queryset, many=False)
         return Response(serializer.data)
+
+class UserProfileUpdate(APIView):
+    def put(self, request):
+        permission_classes = [IsAuthenticated]
+        user = request.user
+        seralizer = UserSerializerWithToken(user, many=False)
+        data = request.data 
+        user.first_name = data['name']
+        user.email = data['email']
+        if data['password'] != '':
+            user.password = make_password(data['password'])
+        
+        user.save()
 
 class Users(APIView):
     def get(self, request):
