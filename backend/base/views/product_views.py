@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response 
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from base.serializers import ProductSerializer
-from base.models import Product
+from base.models import Product, Review
 
 
 class ProductsView(APIView):
@@ -62,3 +62,13 @@ class UploadImage(APIView):
         product.image = request.FILES.get('image')
         product.save()
         return Response('Image was uploaded')
+
+
+class ProductReview(APIView):
+    def post(self, request, pk):
+        permission_classes=[IsAuthenticated]
+        user = request.user
+        product = Product.objects.get(_id=pk)
+        data = request.data
+
+        

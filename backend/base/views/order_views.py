@@ -74,6 +74,14 @@ class UpdateOrderToPaidView(APIView):
         order.save()
         return Response('Order was paid')
 
+class UpdateOrderToDelivered(APIView):
+    permission_classes = [IsAdminUser]
+    def put(self, request, pk):
+        order = Order.objects.get(_id=pk)
+        order.isDelivered = True
+        order.deliveredAt = datetime.now()
+        order.save()
+        return Response('Order was delivered')
 
 class OrderById(APIView):
     def get(self, request, pk):
