@@ -49,12 +49,21 @@ class OrderItemsView(APIView):
 
 
 class MyOrdersView(APIView):
-    permission_classes = [IsAuthenticated]
     def get(self, request):
+        permission_classes = [IsAuthenticated]
         user = request.user
         orders = user.order_set.all()
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
+
+
+class AllOrders(APIView):
+    def get(self, request):
+        permission_classes = [IsAdminUser]
+        orders = Order.objects.all()
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data)
+        
 
 class UpdateOrderToPaidView(APIView):
     permission_classes = [IsAuthenticated]
