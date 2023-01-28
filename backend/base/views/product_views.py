@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.hashers import make_password
 from rest_framework.views import APIView
-from rest_framework.response import Response 
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from base.serializers import ProductSerializer
 from base.models import Product, Review
@@ -70,5 +71,28 @@ class ProductReview(APIView):
         user = request.user
         product = Product.objects.get(_id=pk)
         data = request.data
+        alreadyExists = product.review_set.filter(user=user).exist()
 
-        
+        if alreadyExists:
+            return Response({'Details': 'Product already reviewed'},
+            status=status.HTTP_404_BAD_REQUEST)
+        elif data['rating'] == 0:
+            return Response({'details': 'Please select a rating'})
+        else:
+            review = Review.objects.create(
+                user=user,
+                product=product,
+                name=user.first_name,
+                rating=data['rating'],
+                comment=data['comment']
+            )
+            rewiews = product.rewiew_set.all()
+            product.numReviews = len(rewiews)
+            total = 0
+            for i in rewiews:
+                total += i.rating
+
+            product.rating = total / len(rewiews)
+            product.save()
+            return Response('Review Added')
+
