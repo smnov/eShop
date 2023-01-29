@@ -4,15 +4,36 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from base.serializers import ProductSerializer
 from base.models import Product, Review
 
 
 class ProductsView(APIView):
     def get(self, request):
-        queryset = Product.objects.all()
-        serializer = ProductSerializer(queryset, many=True)
-        return Response(serializer.data)
+        query = request.query_params.get('keyword')
+        if query == None:
+            query = ''
+        products = Product.objects.filter(name__icontains=query)
+
+        page = request.query_params.get('page')
+        paginator = Paginator(products, 2)
+
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+
+        if page == None:
+            page = 1
+        
+        page = int(page)
+        serializer = ProductSerializer(products, many=True)
+        return Response({'products': serializer.data, 
+                        'page': page, 
+                        'pages': paginator.num_pages})
     def post(self, request):
         permission_classes = [IsAdminUser]
         user = request.user
@@ -27,6 +48,14 @@ class ProductsView(APIView):
         )
         serializer = ProductSerializer(product, many=False)
         return Response(serializer.data)
+
+
+class TopProducts(APIView):
+    def get(self, request):
+        products = Products.objects.filter(rating__gte=4).order_by('-rating')[0:5] # Top 5 Products that greater than or equal to 4
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+
 
 class ProductView(APIView):
     def get(self, request, pk):
