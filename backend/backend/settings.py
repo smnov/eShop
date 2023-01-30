@@ -1,5 +1,6 @@
 from pathlib import Path
 from datetime import timedelta
+from django.core.management.commands.runserver import Command as runserver
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,6 +15,7 @@ SECRET_KEY = 'django-insecure-sslbwm_m(22t2xi7i)tj^7nd$x$ne^+b_ekz8dg=75-eajgv+q
 DEBUG = True
 
 ALLOWED_HOSTS = []
+runserver.default_port = '8000'
 
 
 # Application definition

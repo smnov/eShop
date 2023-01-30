@@ -39,7 +39,7 @@ class OrderItemsView(APIView):
                     name=product.name,
                     qty=i['qty'],
                     price=i['price'],
-                    image=product.image.url
+                    image=product.image.url,
                 ) 
 
                 product.countInStock -= item.qty

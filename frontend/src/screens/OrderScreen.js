@@ -48,8 +48,9 @@ function OrderScreen() {
         dispatch(payOrder(order._id))
     }
 
-    return 
-        loading ? (
+    return (
+        <div>
+        {loading ? (
         <Loader />
     ) : error ? (
         <Message variant='danger'>{error}</Message>
@@ -98,6 +99,7 @@ function OrderScreen() {
                                 <ListGroup variant="flush">
                                     {order?.orderItems?.map((item, index) => (
                                         <ListGroup.Item key={index}>
+                                            {console.log(item.image)}
                                             <Row>
                                                 <Col md={1}>
                                                     <Image
@@ -180,7 +182,9 @@ function OrderScreen() {
                 </Col>
             </Row>
         </div>
-    );
+    )}
+    </div>
+    )
 }
 
 export default OrderScreen;

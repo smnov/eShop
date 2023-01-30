@@ -2,15 +2,21 @@
 Ecommerce website with python and django-rest-framework on backend and react-js on frontend.
 
 ## Features:
-- proudct list
-- search
-- pagination
-- order and payment features
-- shipping cart
-- deliver and payment status
-- admin panel for adding new product and inspect orders
+- Proudct list
+- Top rated products carousel
+- Login and registration
+- Adding reviews to products
+- Search
+- Pagination
+- Stock
+- Order, checkout and payment features
+- Shipping cart
+- Deliver and payment status
+- Admin panel for view users, adding new products, stock and inspect orders
 
 # Installation
+
+## Backend
 Let's setup our python backend.
 ```    
 > cd backend
@@ -33,7 +39,7 @@ Now you can run django server
 > python3 manage.py runserver
 ```
 That's it for our backend.
-# Frontend
+## Frontend
 Go to frontend directory:
 ```
 > cd ../frontend
