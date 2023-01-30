@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
-import { Link, useNavigate, createSearchParams, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Button, Form } from 'react-bootstrap'
 import FormContainer from '../components/FormContainer'
 import Message from '../components/Message'
@@ -36,7 +36,7 @@ function UserEditScreen() {
             setIsAdmin(user.isAdmin)
         }
         }
-    }, [id, user, success, navigate])
+    }, [id, user, success, navigate, dispatch])
 
     const submitHandler = (e) => {
         e?.preventDefault();

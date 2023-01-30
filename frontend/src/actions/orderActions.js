@@ -11,7 +11,7 @@ import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST,
     ORDER_PAY_FAIL, ORDER_PAY_REQUEST, 
     ORDER_PAY_SUCCESS } from "../constants/orderConstants"
 import { BASE_URL } from "../constants/productConstants"
-import { CART_CLEAR_ITEMS, CART_SAVE_PAYMENT_METHOD } from "../constants/cartConstants"
+import { CART_CLEAR_ITEMS } from "../constants/cartConstants"
 
 export const createOrder = (order) => async (dispatch, getState) => {
     try {

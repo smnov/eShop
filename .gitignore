@@ -1,7 +1,8 @@
-Pipfile
-Pipfile.lock
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# backend
+backend/venv
 
+# frontend
 # dependencies
 frontend/node_modules
 frontend/.pnp

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, Card, Col, Image, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import { Button, Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { localhost } from '../constants/baseConstants'
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ function PlaceOrderScreen() {
             dispatch({
                 type: ORDER_CREATE_RESET
             })
-    }, [success])
+    }, [success, dispatch, navigate, order._id])
 
     const placeOrder = () => {
         dispatch(createOrder({

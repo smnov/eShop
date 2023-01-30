@@ -6,7 +6,6 @@ import { deliverOrder, getOrderDetails, payOrder } from "../actions/orderActions
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { ORDER_DELIVER_RESET, ORDER_PAY_RESET } from "../constants/orderConstants";
-import { localhost } from "../constants/baseConstants";
 
 
 function OrderScreen() {
@@ -49,7 +48,8 @@ function OrderScreen() {
         dispatch(payOrder(order._id))
     }
 
-    return loading ? (
+    return 
+        loading ? (
         <Loader />
     ) : error ? (
         <Message variant='danger'>{error}</Message>
