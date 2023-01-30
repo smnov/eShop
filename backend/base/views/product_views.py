@@ -17,7 +17,7 @@ class ProductsView(APIView):
         products = Product.objects.filter(name__icontains=query)
 
         page = request.query_params.get('page')
-        paginator = Paginator(products, 2)
+        paginator = Paginator(products, 10)
 
         try:
             products = paginator.page(page)
@@ -52,7 +52,7 @@ class ProductsView(APIView):
 
 class TopProducts(APIView):
     def get(self, request):
-        products = Products.objects.filter(rating__gte=4).order_by('-rating')[0:5] # Top 5 Products that greater than or equal to 4
+        products = Product.objects.filter(rating__gte=4).order_by('-rating')[0:5] # Top 5 Products that greater than or equal to 4
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
@@ -100,11 +100,11 @@ class ProductReview(APIView):
         user = request.user
         product = Product.objects.get(_id=pk)
         data = request.data
-        alreadyExists = product.review_set.filter(user=user).exist()
+        alreadyExists = product.review_set.filter(user=user).exists()
 
         if alreadyExists:
             return Response({'Details': 'Product already reviewed'},
-            status=status.HTTP_404_BAD_REQUEST)
+            status=status.HTTP_400_BAD_REQUEST)
         elif data['rating'] == 0:
             return Response({'details': 'Please select a rating'})
         else:
@@ -115,13 +115,13 @@ class ProductReview(APIView):
                 rating=data['rating'],
                 comment=data['comment']
             )
-            rewiews = product.rewiew_set.all()
-            product.numReviews = len(rewiews)
+            reviews = product.review_set.all()
+            product.numReviews = len(reviews)
             total = 0
-            for i in rewiews:
+            for i in reviews:
                 total += i.rating
 
-            product.rating = total / len(rewiews)
+            product.rating = total / len(reviews)
             product.save()
             return Response('Review Added')
 
