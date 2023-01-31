@@ -66,8 +66,8 @@ class AllOrders(APIView):
         
 
 class UpdateOrderToPaidView(APIView):
-    permission_classes = [IsAuthenticated]
     def put(self, request, pk):
+        permission_classes = [IsAuthenticated]
         order = Order.objects.get(_id=pk)
         order.isPaid = True
         order.paidAt = datetime.now()

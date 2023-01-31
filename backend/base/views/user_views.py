@@ -38,6 +38,7 @@ class UserProfileUpdate(APIView):
             user.password = make_password(data['password'])
         
         user.save()
+        return Response(seralizer.data)
 
 class UserDelete(APIView):
     def delete(self, request, pk):
