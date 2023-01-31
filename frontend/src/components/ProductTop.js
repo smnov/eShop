@@ -18,7 +18,7 @@ function ProductTop() {
   return ( loading ? <Loader />
     : error
     ? <Message variant='danger'>{error}</Message>
-    : (
+    : products.length !== 0 && (
         <Carousel pause='hover' className='bg-dark'>
             {products?.map(product => (
                 <Carousel.Item key={product._id}>

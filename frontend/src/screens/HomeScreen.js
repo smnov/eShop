@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
-import { listProducts } from '../actions/productActions'
+import { listProducts, productTop } from '../actions/productActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { useLocation } from 'react-router-dom'
@@ -13,6 +13,7 @@ function HomeScreen() {
 
     const location = useLocation()
     const dispatch = useDispatch()
+
     const productList = useSelector(state => state.productList)
     const {error, loading, products, page, pages} = productList
 
